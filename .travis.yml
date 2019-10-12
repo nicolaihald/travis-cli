@@ -1,0 +1,34 @@
+sudo: 'required'
+
+services:
+  - 'docker'
+
+env:
+  global:
+  - DOCKER_IMAGE=nicolaihald/travis-cli
+
+before_install:
+  - echo "Verifying Docker Hub Credentials"
+  - docker --version
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - echo "OK"
+
+install:
+- echo "install nothing!"
+
+script:
+- echo "no tests!"
+
+after_success:
+- export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH ; fi`
+- export GIT_SHA="$(git rev-parse --short HEAD)"
+
+- docker build -t $DOCKER_IMAGE:$COMMIT .
+- docker tag $DOCKER_IMAGE:$COMMIT $DOCKER_IMAGE:$TAG
+- docker tag $DOCKER_IMAGE:$COMMIT $DOCKER_IMAGE:travis-$TRAVIS_BUILD_NUMBER
+
+- docker images
+- docker push $DOCKER_IMAGE
+
+
+
