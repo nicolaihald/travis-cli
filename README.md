@@ -55,7 +55,3 @@ Alternatively, you can add the raw, uncrypted credentials directly:
 travis env set DOCKER_USERNAME username
 travis env set DOCKER_PASSWORD password/token
 ```
-
-
-
-
