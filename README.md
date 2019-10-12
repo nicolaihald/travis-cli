@@ -1,9 +1,9 @@
 [![Build Status](https://travis-ci.org/nicolaihald/toolbox.svg?branch=master)](https://travis-ci.org/nicolaihald/toolbox)
-# Toolbox 
-This docker image contains various utility tools like ab (apache bench), siege, curl, wget, ping, netcat, nslookup, host, perf, psql, mysql etc.. The image is typically used for running a "_one-off_" pod/container in kubernetes for debugging purposes.
+# Travis CLI 
+Simple wrapper for running the travis-cli.
 
 # Usage
-Run the container from within your repository, as the entire repo will mounted into the container:
+Run the container from within your repository as the entire repo/source will mounted into the container:
 ```bash
 docker run -it --rm -v $(pwd):/workspace --entrypoint=/bin/sh nicolaihald/travis-cli
 ```
