@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/nicolaihald/toolbox.svg?branch=master)](https://travis-ci.org/nicolaihald/toolbox)
+[![Build Status](https://travis-ci.org/nicolaihald/travis-cli.svg?branch=master)](https://travis-ci.org/nicolaihald/travis-cli)
 # Travis CLI 
 Simple wrapper for running the travis-cli.
 
