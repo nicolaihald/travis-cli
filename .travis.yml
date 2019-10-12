@@ -6,6 +6,7 @@ services:
 env:
   global:
   - DOCKER_IMAGE=nicolaihald/travis-cli
+  - COMMIT=${TRAVIS_COMMIT::8}
 
 before_install:
   - echo "Verifying Docker Hub Credentials"
