@@ -9,7 +9,7 @@ docker run -it --rm -v $(pwd):/workspace --entrypoint=/bin/sh nicolaihald/travis
 ```
 
 
-### Login (using token)
+### Login (using token)travis login --github-token c18b9a00099e32607ab221a7996e67fa774da77d
 Assuming you have already configured your reposotiry on https://travis-ci.org (open-source), you should be able to login using the cli within the container. 
 
 > *To create a personal api token, navigate to https://github.com/settings/tokens.*
@@ -30,7 +30,7 @@ travis whoami
   
 
 
-### Encrypt sensitive data
+### Encrypting Sensitive Data
 During the execution of the `.travis.yml` file, Travis will automaticall decrypt secrets and interpret them as bash regular commands. To encrypt your token and add it as a `GITHUB_TOKEN` environment variable, run the following command: 
 
 ```bash
@@ -42,13 +42,23 @@ To allow Travis to push images to docker hub, you can add an encrypted version o
 
 ```bash
 travis encrypt DOCKER_HUB_EMAIL=<email> --add
-travis encrypt DOCKER_HUB_USERNAME=<username> --add
-travis encrypt DOCKER_HUB_PASSWORD=<token> --add
+travis encrypt DOCKER_HUB_USERNAME=nicolaihald --add
+travis encrypt DOCKER_HUB_PASSWORD=c18b9a00099e32607ab221a7996e67fa774da77d --add
 ```
 
-### Adding environment variables directly to Travis: 
+### Adding Travis Environment Variables
 Alternatively, you can add the raw, uncrypted credentials directly: 
 ```bash
-travis env set DOCKER_USERNAME username
-travis env set DOCKER_PASSWORD password/token
+travis env set DOCKER_USERNAME nicolaihald
+travis env set DOCKER_PASSWORD c18b9a00099e32607ab221a7996e67fa774da77d
+```
+
+### Updating Travis Environment Variables (recursively)
+To regenerate a specific environment variables across multiple repostories (in one go), you would typically use a command like the one below. 
+```bash
+# Example 1. Update DOCKER_PASSWORD for ALL repos:
+travis repos -a --no-interactive | xargs -n1 travis env set DOCKER_PASSWORD xxxxxxxxx --private --repo
+
+# Example 2.  Update DOCKER_PASSWORD for certain repos only: 
+travis repos -a --no-interactive | grep some_repo_pattern | xargs -n1 travis env set DOCKER_PASSWORD xxxxxxxxx --private --repo
 ```
